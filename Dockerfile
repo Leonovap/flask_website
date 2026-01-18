@@ -21,7 +21,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN apk del .build-deps
 
 # Copy application code
-COPY . .
+# Copy only necessary app files
+COPY run.py .
+COPY requirements.txt .
+COPY app/ ./app
+COPY content/ ./content
+COPY static/ ./static
 
 # Expose the port used in docker-compose.yml
 EXPOSE 8000
