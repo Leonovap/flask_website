@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Login</h2>
+
+<form method="POST" action="{{ url_for('auth.login') }}" novalidate>
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.username.label }}<br>
+        {{ form.username(class="form-control", placeholder="root") }}
+        {% for error in form.username.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="form-group">
+        {{ form.password.label }}<br>
+        {{ form.password(class="form-control", placeholder="supersecret") }}
+        {% for error in form.password.errors %}
+            <span class="error-message">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    {{ form.submit(class="button") }}
+    <a href="{{ url_for('main.index')}}" class="button">Back</a>
+</form>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+
+
+
+<footer class="terminal-footer">
+  <div class="bash-output">
+    <span class="typewriter" data-text="dataforge@guest~:$ sudo su"></span><br>
+    <span class="typewriter" data-text="[sudo] password for root:"></span><br>
+    <span class="typewriter" data-text="Sorry, try again."></span><br>
+    <span class="typewriter" data-text="[sudo] password for root:"></span><br>
+    <span class="typewriter" data-text="root@dataforge:/home/Guest"></span><br>
+    <span class="typewriter" data-text="root@dataforge:/home/Guest# passwd Guest... "></span>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='typewriter.js') }}?v=1.0.1"></script>
+
+{% endblock %}

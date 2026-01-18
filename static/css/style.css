@@ -1,0 +1,151 @@
+/* ──────────────── Base Styles ──────────────── */
+body {
+    background-color: #0d0d0d; /* почти чёрный */
+    color: #f8f8f2;            /* белый с лёгким оттенком */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    padding: 2rem;
+    margin: 0;
+}
+
+/* ──────────────── Typography ──────────────── */
+h1, h2, h3 {
+    color: #ffffff;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style: square;
+    margin-left: 2rem;
+}
+
+/* ──────────────── Links & Buttons ──────────────── */
+a, .button {
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 0.4em 0.8em;
+    background-color: transparent;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0.5em 0.5em 0.5em 0;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 4px;
+}
+
+.button:hover, a:hover {
+    background-color: #00ff00;
+    color: #000000;
+}
+
+/* Solid button variant */
+.button-solid {
+    background-color: #00ff00;
+    color: #000000;
+    border: 1px solid #00ff00;
+}
+
+.button-solid:hover {
+    background-color: #00cc00;
+    color: #000000;
+}
+
+
+/* ──────────────── Form Elements ──────────────── */
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: 1px solid #444;
+    padding: 0.5em;
+    font-family: monospace;
+    margin-bottom: 1em;
+}
+
+input[type="submit"] {
+    background-color: #00ff00;
+    color: #000;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="submit"]:hover {
+    background-color: #00cc00;
+}
+
+input:invalid {
+    border-color: #00ff00; 
+    box-shadow: none; 
+}
+
+/* ──────────────── Layout Containers ──────────────── */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.ascii-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.terminal-footer {
+    margin-top: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff00;
+    background: transparent;
+    padding-top: 1rem;
+}
+
+/* ──────────────── ASCII Art ──────────────── */
+.ascii-art {
+    color: #00ff00;
+    white-space: pre;
+    font-size: 12px;
+    line-height: 1.2;
+    display: inline-block;
+    text-align: left;
+}
+
+.cursor {
+    display: inline-block;
+    width: 1ch;
+    animation: blink 1s step-start infinite;
+    color: #00ff00;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ──────────────── Bash Output ──────────────── */
+.bash-output pre {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre;
+    color: #00ff00;
+}
+
+/* ──────────────── Column Button Layout ──────────────── */
+.button-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+    margin-top: 1em;
+}
+
+.terminal-footer {
+    margin-top: 2rem;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff00;
+    background: transparent;
+    padding-top: 1rem;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}

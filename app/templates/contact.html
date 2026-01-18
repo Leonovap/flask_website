@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Contact Me:</h2>
+<ul>
+ <li>Email: 
+  <a href="#" onclick="copyToClipboard('liawonau.al.pa@gmail.com'); return false;">
+    liawonau.al.pa@gmail.com
+  </a>
+</li>
+<script>
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+      alert("Email copied to the clipboard: " + text);
+    }, function(err) {
+      alert("Copy error: " + err);
+    });
+  }
+</script>
+    <li>GitHub: <a href="https://github.com/Leonovap" target="_blank">github.com/Leonovap</a></li>
+    <li>Telegram: <a href="https://t.me/AliaksandrLiavonau" target="_blank">@AliaksandrLiavonau</a></li>
+    <li>Linkedin: <a href="https://www.linkedin.com/in/aliaksandr-liavonau-a68780248/" target="_blank" rel="noopener noreferrer">My_Linkedin</a></li>
+
+
+</ul>
+<a href="{{ url_for('main.index')}}" class="button">Back</a>
+
+
+<footer class="terminal-footer">
+  <div class="bash-output">
+    <span class="typewriter" data-text="dataforge@guest~:$ sudo su"></span><br>
+    <span class="typewriter" data-text="[sudo] password for root:"></span><br>
+    <span class="typewriter" data-text="Sorry, try again."></span><br>
+    <span class="typewriter" data-text="[sudo] password for root:"></span><br>
+    <span class="typewriter" data-text="root@dataforge:/home/Guest"></span><br>
+    <span class="typewriter" data-text="root@dataforge:/home/Guest# passwd Guest... "></span>
+  </div>
+</footer>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+.cv-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  font-family: sans-serif;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.cv-header h1 {
+  margin-bottom: 0;
+  font-size: 2.5rem;
+}
+
+.cv-header h2 {
+  margin-top: 0;
+  font-weight: normal;
+  color: #ddd;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: .5rem 0 1.5rem;
+}
+
+.contact-list li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
+
+.cv-section h3 {
+  margin-bottom: .5rem;
+  border-bottom: 2px solid #ddd;
+  display: inline-block;
+}
+
+.skills-list,
+.education-list {
+  list-style: none;
+  padding: 0;
+}
+
+.job-entry {
+  margin-bottom: 1rem;
+}
+
+.job-entry .company {
+  font-weight: normal;
+  color: #ddd;
+  font-size: .9rem;
+}
+
+time {
+  display: block;
+  font-size: .85rem;
+  color: #777;
+  margin-bottom: .5rem;
+}

@@ -1,0 +1,132 @@
+{
+  "personal": {
+    "name": "Aliaksandr Liavonau",
+    "title": "IT Supporter | Aspiring DevOps & Automation Enthusiast",
+    "email": "liawonau.al.pa@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/aliaksandr-liavonau-a68780248/",
+    "github": "github.com/Leonovap"
+  },
+"skills_columns": {
+  "Core Skills": [
+    "Linux system administration (Debian/Ubuntu, AlmaLinux/CentOS)",
+    "Windows, Windows Server(2016), (Account administration, basic troubleshooting)",
+    "Bash scripting (automation tools: WireGuard installer, Obsidian-to-Git sync)",
+    "Python basics (Flask web apps, small bots, utilities)",
+    "Docker & Docker Compose (familiar with Portainer)",
+    "Networking fundamentals (TCP/IP, VPN, DNS, OSI model)",
+    "Active Directory & Active Roles Server (user management, policies)",
+    "Troubleshooting and problem-solving under pressure"
+  ],
+  "Tools & Platforms": [
+    "Proxmox, KVM (virtualization and test environments)",
+    "Git (daily use, GitHub Actions basics)",
+    "OpenVPN / WireGuard (setup and configuration)",
+    "Nginx (reverse proxy, web hosting)",
+    "Samba & Nextcloud (file sharing and self-hosted cloud services)",
+    "Citrix Workspace (enterprise environments)",
+    "Ansible (beginner, configuration automation)"
+  ],
+  "Soft Skills": [
+    "Problem solving",
+    "Fast learning",
+    "Adaptability",
+    "Clear communication",
+    "Teamwork",
+    "Self-motivation"
+  ]
+}
+,
+  "experiences": [
+    {
+      "role": "IT Supporter (Service Desk Agent, L1)",
+      "company": "DSV ISS, Warsaw, Poland",
+      "period": "2025 – Present",
+      "details": [
+        "Providing first-line IT support in a large-scale corporate production environment.",
+        "Learning corporate IT workflows, tools, and troubleshooting processes.",
+        "Handling tickets related to software, hardware, and user account management.",
+        "Actively expanding technical expertise towards DevOps and Linux system administration."
+      ]
+    },
+    {
+      "role": "Gas Station Sales Associate",
+      "company": "Circle K Poland",
+      "period": "2023 – 2025",
+      "details": [
+        "Customer service and daily operations management.",
+        "Used free time outside of shifts to study Linux, scripting, and networking.",
+        "Prepared for transition into the IT field."
+      ]
+    },
+    {
+      "role": "System Administrator",
+      "company": "Security Technologies / Softcorp LLC, Minsk, Belarus",
+      "period": "2021 – 2023",
+      "details": [
+        "Maintained IT infrastructure for a 24/7 office with over 400 employees.",
+        "Deployed in-house developed software to production servers.",
+        "Managed VoIP systems, access control, and networking equipment.",
+        "Implemented security policies and monitored system uptime.",
+        "Provided technical support to multiple departments under high availability requirements."
+      ]
+    },
+    {
+      "role": "Sales & Procurement Specialist / ERP & Website Admin",
+      "company": "Stetskievich Group of Companies, Minsk, Belarus",
+      "period": "2019 – 2021",
+      "details": [
+        "Managed the company’s ERP system maintenance and upgrades.",
+        "Oversaw corporate website updates and performance.",
+        "Negotiated with B2B and B2C clients, securing long-term contracts.",
+        "Discovered a passion for IT through managing automation and system integrations."
+      ]
+    }
+  ],
+ "projects": [
+  {
+    "name": "Personal Cloud & Services Portal",
+    "description": "Self-hosted web platform with authentication, service dashboard, and reverse proxying. Built with Flask and SQLAlchemy, containerized with Docker, deployed on Linux with Nginx. Integrated with OpenVPN for secure access and CI/CD pipelines for automated updates.",
+    "stack": ["Python", "Flask", "SQLAlchemy", "Docker", "Linux", "Nginx", "OpenVPN", "Bash", "Git"]
+  },
+  {
+    "name": "Corporate Network Simulation",
+    "description": "Designed and deployed a model of a corporate IT infrastructure including 3 servers and 5 client hosts. The environment includes private cloud services, Samba shares, backups, VPN connectivity, DNS management, and a DMZ zone with security hardening (fail2ban, firewall).",
+    "stack": ["AlmaLinux", "Ubuntu Server", "Windows Server", "OpenVPN", "DNS", "Nginx", "Fail2ban", "Git", "Docker", "Docker Compose", "Bash", "systemd"]
+  },
+  {
+    "name": "Obsidian Sync Script",
+    "description": "Bash-based synchronization tool for Obsidian notes across PC, Linux servers, and Android via Termux. Currently semi-automated with a TUI menu, with planned features for full offline autonomy and background sync.",
+    "stack": ["Bash", "Git", "Termux"]
+  },
+  {
+    "name": "Cloud Server Orchestration with KVM",
+    "description": "Prototype of a private cloud environment using KVM virtualization and Ansible automation. Virtual machines are provisioned, configured, and exposed via VPN with full isolation from the host system. Planned features include lifecycle management of VM instances, mimicking AWS EC2 functionality.",
+    "stack": ["Linux", "KVM", "Ansible", "Nginx"]
+  }
+ ],
+  "education": [
+    {
+      "degree": "Bachelor's Degree in Law",
+      "school": "\"MITSO\" International University, Minsk",
+      "period": "2015 – 2020"
+    },
+    {
+      "degree": "Additional Courses: Polish Language, Macroeconomics",
+      "school": "",
+      "period": ""
+    }
+  ],
+  "languages": {
+    "Polish": "Full Professional Proficiency",
+    "Russian": "Professional Working Proficiency",
+    "English": "Professional Working Proficiency"
+  },
+"interests": [
+  "Building automation tools & self-hosted services to reduce routine",
+  "Linux tinkering & scripting for personal infrastructure, self-hosting",
+  "Exploring DevOps practices and home-lab experiments",
+  "Music (played bass, DJ’ed a bit, digging into funk/soul/house/old-school rap, rock music)",
+  "Walking, traveling, and exploring new places (touching grass included)",
+  "Deep-diving into internet rabbit holes & learning through curiosity"
+]
+}

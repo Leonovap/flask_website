@@ -1,0 +1,19 @@
+<!-- app/templates/blog.html -->
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Blog</h1>
+<section class="blog-intro">
+  <p>
+    My tech journey, documented. Short and useful write-ups on Python, Linux, and the random IT bits that make life easier.<br>
+    Content coming soon, for now, it's just 404 vibes xD
+  </p>
+</section>
+    <ul>
+    {% for post in posts %}
+        <li><a href="{{ url_for('blog.blog_post', slug=post.slug) }}">{{ post.title }}</a></li>
+    {% endfor %}
+    </ul>
+
+<a href="{{ url_for('main.index')}}" class="button">Back</a>    
+{% endblock %}
+

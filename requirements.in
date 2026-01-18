@@ -1,0 +1,10 @@
+flask
+flask-bcrypt
+flask-login
+flask-sqlalchemy
+flask-wtf
+python-dotenv
+requests
+pyyaml
+markdown   # or markdown2, but not both
+

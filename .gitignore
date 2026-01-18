@@ -1,0 +1,49 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.pyo
+**__pycache__/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables
+.env
+
+# SQLite database
+*.db
+*.sqlite3
+
+# Instance folder (Flask)
+instance/
+
+# Scripts and config files 
+config.py
+createuser.py
+runvenv.sh
+deleteuser.py
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+Dockerfile
+Dockerfile.check
+pat-docker
+
+.gitignore.swp

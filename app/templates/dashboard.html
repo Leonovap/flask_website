@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Pirate cave</h1>
+<div>
+      <p>
+   Some services have web-domain, Torrent services and Code server working only over the VPN
+      </p>
+<div class="button-column">
+    <a href="https://calibre.forgeworld.eu" class="button" target="_blank">Calibre</a>
+    <a href="https://mycloud.forgeworld.eu" class="button" target="_blank">Nextcloud</a>
+    <a href="http://10.8.0.3:8181" class="button" target="_blank">Codeserver</a>
+    <a href="http://10.8.0.3:8282" class="button" target="_blank">QBitTorrent</a>
+</div>
+
+<div class="terminal-footer">
+    <a href="{{ url_for('auth.logout') }}" class="button button-solid">Logout</a>
+    <a href="{{ url_for('main.index') }}" class="button">Back</a>
+</div>
+
+</div>
+<br>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
