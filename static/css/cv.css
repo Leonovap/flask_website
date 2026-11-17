@@ -1,0 +1,222 @@
+/* ──────────────── Screen Styles (DataForge Theme) ──────────────── */
+.cv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cv-container {
+    max-width: 850px;
+    margin: 0 auto;
+    font-family: var(--font-mono, 'Courier New', monospace);
+    line-height: 1.6;
+    color: #e8e8e8;
+    border: 1px solid #005500;
+    background: #080808;
+    padding: 2rem;
+}
+
+.cv-header {
+    border-bottom: 1px solid #00ff00;
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.cv-header h1 {
+    margin: 0 0 0.3rem 0;
+    font-size: 2rem;
+    color: #00ff00;
+}
+
+.cv-header h2 {
+    margin: 0 0 0.8rem 0;
+    font-size: 1.15rem;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.cv-meta {
+    font-size: 0.85rem;
+    color: #88cc88;
+    margin-bottom: 1rem;
+}
+
+.cv-summary {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #cccccc;
+}
+
+.cv-section {
+    margin-bottom: 1.8rem;
+}
+
+.cv-section h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #00ff00;
+    border-bottom: 1px dashed #006600;
+    padding-bottom: 0.3rem;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.skill-box {
+    margin-bottom: 1rem;
+}
+
+.skill-box h4 {
+    margin: 0 0 0.4rem 0;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.skills-list {
+    margin: 0 0 0.8rem 1.2rem;
+    padding: 0;
+    list-style: square;
+    font-size: 0.9rem;
+}
+
+.job-entry {
+    margin-bottom: 1.5rem;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+}
+
+.job-header h4 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.05rem;
+}
+
+.job-entry .company {
+    color: #00ff00;
+    font-weight: normal;
+}
+
+.job-entry ul {
+    margin: 0.4rem 0 0 1.2rem;
+    padding: 0;
+    font-size: 0.92rem;
+}
+
+.job-entry li {
+    margin-bottom: 0.3rem;
+}
+
+time {
+    font-size: 0.85rem;
+    color: #88cc88;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+}
+
+.project-entry {
+    border: 1px solid #004400;
+    padding: 1rem;
+    background: #040404;
+}
+
+.project-entry h4 {
+    margin: 0 0 0.5rem 0;
+    color: #00ff00;
+    font-size: 1rem;
+}
+
+.project-entry p {
+    margin: 0 0 0.6rem 0;
+    font-size: 0.88rem;
+}
+
+.project-stack {
+    color: #88cc88;
+    font-size: 0.82rem !important;
+    margin-bottom: 0 !important;
+}
+
+.cv-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.education-list,
+.lang-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.education-list li,
+.lang-list li {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 650px) {
+    .cv-container { padding: 1rem; }
+    .projects-grid, .cv-two-col { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+/* ──────────────── ATS-Friendly PDF / Print Mode ──────────────── */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 11pt !important;
+    }
+    .ascii-container,
+    .no-print,
+    .terminal-footer {
+        display: none !important;
+    }
+    .container,
+    .cv-container {
+        max-width: 100% !important;
+        border: none !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .cv-header h1,
+    .cv-header h2,
+    .cv-section h3,
+    .job-header h4,
+    .job-entry .company,
+    .project-entry h4,
+    .skill-box h4,
+    .cv-summary,
+    .cv-meta,
+    .project-stack,
+    time {
+        color: #000000 !important;
+    }
+    .cv-header,
+    .cv-section h3 {
+        border-bottom: 1px solid #000000 !important;
+    }
+    .project-entry {
+        border: 1px solid #cccccc !important;
+        background: #ffffff !important;
+        break-inside: avoid;
+    }
+    .job-entry {
+        break-inside: avoid;
+    }
+}

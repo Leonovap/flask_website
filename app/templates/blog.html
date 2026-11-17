@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="notebook-header">
+    <h1>Blog / Tech Write-ups</h1>
+    <div>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('auth.notebook') }}" class="button button-solid">[ + Write Post in Vim ]</a>
+        {% endif %}
+        <a href="{{ url_for('main.index') }}" class="button">Back</a>
+    </div>
+</div>
+
+<p>My tech journey, documented. Short and useful write-ups on Python, Linux, and the random IT bits that make life easier[cite: 2].</p>
+
+<!-- Поисковик по архиву постов -->
+<form method="GET" action="{{ url_for('blog.blog_index') }}" style="display: flex; gap: 0.5rem; margin: 1.5rem 0;">
+    <input type="text" name="q" value="{{ q }}" placeholder="grep -i 'search archive...'" class="form-control" style="max-width: 400px; margin: 0;">
+    <button type="submit" class="vim-btn button-solid" style="margin: 0;">[ Search ]</button>
+    {% if q %}
+        <a href="{{ url_for('blog.blog_index') }}" class="vim-btn" style="margin: 0;">[ Clear ]</a>
+    {% endif %}
+</form>
+
+<!-- Карусель / Список постов -->
+{% if posts %}
+    <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+        {% for post in posts %}
+        <div class="service-card" style="padding: 1.2rem;">
+            <div class="service-header">
+                <a href="{{ url_for('blog.blog_post', slug=post.slug) }}" style="border: none; padding: 0; margin: 0; font-size: 1.25rem; font-weight: bold;">
+                    {{ post.title }}
+                </a>
+                <span class="status-badge status-online">{{ post.pub_date }}</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #88cc88; margin-bottom: 0.6rem;">
+                Author: <strong>{{ post.author }}</strong> | Slug: <code>/blog/{{ post.slug }}</code>
+            </div>
+            <p class="service-desc" style="color: #ccc; margin-bottom: 0.8rem;">
+                {{ post.content[:220] }}{% if post.content|length > 220 %}...{% endif %}
+            </p>
+            <div>
+                <a href="{{ url_for('blog.blog_post', slug=post.slug) }}" class="vim-btn" style="margin: 0;">[ Read Write-up &rarr; ]</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    {% if pagination.pages > 1 %}
+    <div style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; margin: 1.5rem 0;">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('blog.blog_index', page=pagination.prev_num, q=q) }}" class="vim-btn">&laquo; Prev</a>
+        {% endif %}
+        <span style="padding: 0 0.8rem; color: var(--neon);">
+            Page {{ pagination.page }} of {{ pagination.pages }}
+        </span>
+        {% if pagination.has_next %}
+            <a href="{{ url_for('blog.blog_index', page=pagination.next_num, q=q) }}" class="vim-btn">Next &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% else %}
+    <div style="border: 1px dashed var(--neon-dim); padding: 1.5rem; margin: 1.5rem 0; color: #88cc88;">
+        {% if q %}
+            No posts matching <code>"{{ q }}"</code> found in archive.
+        {% else %}
+            Content coming soon — publish your first note from the Vim Notebook![cite: 2]
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}
+

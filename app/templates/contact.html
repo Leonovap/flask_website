@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>root@dataforge:~# whois aliaksandr</h2>
+<p>Direct communication channels and code repositories:</p>
+
+<div class="cave-grid">
+    <!-- Email (копирование по клику без уродливого alert) -->
+    <a href="#" onclick="copyEmail('liawonau.al.pa@gmail.com'); return false;" class="service-card" id="email-card">
+        <div class="service-header">
+            <span>[Email]</span>
+            <span class="status-badge status-online" id="email-badge">CLICK TO COPY</span>
+        </div>
+        <p class="service-desc" id="email-text">liawonau.al.pa@gmail.com</p>
+    </a>
+
+    <!-- Telegram -->
+    <a href="https://t.me/AliaksandrLiavonau" target="_blank" rel="noopener noreferrer" class="service-card">
+        <div class="service-header">
+            <span>[Telegram]</span>
+            <span class="status-badge status-online">FASTEST</span>
+        </div>
+        <p class="service-desc">@AliaksandrLiavonau</p>
+    </a>
+
+    <!-- GitHub -->
+    <a href="https://github.com/Leonovap" target="_blank" rel="noopener noreferrer" class="service-card">
+        <div class="service-header">
+            <span>[GitHub]</span>
+            <span class="status-badge status-online">REPOS &amp; CODE</span>
+        </div>
+        <p class="service-desc">github.com/Leonovap</p>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/aliaksandr-liavonau-a68780248/" target="_blank" rel="noopener noreferrer" class="service-card">
+        <div class="service-header">
+            <span>[LinkedIn]</span>
+            <span class="status-badge status-online">PROFILE</span>
+        </div>
+        <p class="service-desc">Aliaksandr Liavonau</p>
+    </a>
+</div>
+
+<div style="margin-top: 1.5rem;">
+    <a href="{{ url_for('main.index') }}" class="button">Back</a>
+    <a href="{{ url_for('main.cv') }}" class="button">View CV</a>
+</div>
+
+<footer class="terminal-footer">
+  <div class="bash-output">
+    <span class="typewriter" data-text="dataforge@guest~:$ finger aliaksandr@forgeworld.eu">dataforge@guest~:$ finger aliaksandr@forgeworld.eu</span><br>
+    <span class="typewriter" data-text="Login: aliaksandr       Name: Aliaksandr Liavonau">Login: aliaksandr       Name: Aliaksandr Liavonau</span><br>
+    <span class="typewriter" data-text="Directory: /home/root   Shell: /bin/bash">Directory: /home/root   Shell: /bin/bash</span><br>
+    <span class="typewriter" data-text="Location: Warsaw, PL    Status: Online &amp; Automating">Location: Warsaw, PL    Status: Online &amp; Automating</span><br>
+    <span class="typewriter" data-text="PGP / SSH Auth:         Enabled [2FA Enforced]">PGP / SSH Auth:         Enabled [2FA Enforced]</span><br>
+    <span class="typewriter" data-text="dataforge@guest~:$ _">dataforge@guest~:$ _</span>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='typewriter.js') }}?v=1.0.1"></script>
+<script>
+function copyEmail(email) {
+    navigator.clipboard.writeText(email).then(() => {
+        const badge = document.getElementById('email-badge');
+        const text = document.getElementById('email-text');
+        badge.textContent = 'COPIED!';
+        text.textContent = '[+] Copied to clipboard';
+        setTimeout(() => {
+            badge.textContent = 'CLICK TO COPY';
+            text.textContent = email;
+        }, 2000);
+    });
+}
+</script>
+{% endblock %}

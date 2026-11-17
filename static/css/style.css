@@ -1,0 +1,428 @@
+/* ──────────────── 1. Variables & Reset ──────────────── */
+:root {
+    --bg-main: #0d0d0d;
+    --bg-panel: #050505;
+    --bg-input: #141414;
+    --text-main: #f8f8f2;
+    --neon: #00ff00;
+    --neon-hover: #00cc00;
+    --neon-dim: #004400;
+    --neon-tint: rgba(0, 255, 0, 0.12);
+    --danger: #ff4444;
+    --warn: #ffaa00;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 2rem 1.25rem;
+    margin: 0;
+}
+
+/* ──────────────── 2. Typography & Lists ──────────────── */
+h1, h2, h3 {
+    color: #ffffff;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style: square;
+    margin-left: 2rem;
+}
+
+a {
+    color: var(--neon);
+    text-decoration: none;
+}
+
+/* ──────────────── 3. Layout & ASCII Header ──────────────── */
+.container {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.ascii-container {
+    text-align: center;
+    margin-bottom: 2rem;
+    overflow-x: hidden;
+}
+
+.ascii-art {
+    color: var(--neon);
+    white-space: pre;
+    font-size: clamp(7px, 1.35vw, 12px); /* Плавно сжимается на мобилках без скролла */
+    line-height: 1.15;
+    display: inline-block;
+    text-align: left;
+    user-select: none;
+}
+
+/* ──────────────── 4. Buttons ──────────────── */
+a, .button, .vim-btn {
+    color: var(--neon);
+    border: 1px solid var(--neon);
+    padding: 0.4em 0.85em;
+    background-color: transparent;
+    text-decoration: none;
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    margin: 0.35em 0.5em 0.35em 0;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button:hover, a:hover, .vim-btn:hover {
+    background-color: var(--neon);
+    color: #000000;
+}
+
+.button-solid, input[type="submit"] {
+    background-color: var(--neon);
+    color: #000000;
+    border: 1px solid var(--neon);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button-solid:hover, input[type="submit"]:hover {
+    background-color: var(--neon-hover);
+    color: #000000;
+}
+
+.button-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+    margin-top: 1em;
+}
+
+.btn-full {
+    width: 100%;
+    margin-right: 0;
+    text-align: center;
+}
+
+.btn-danger {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger);
+    color: #000000;
+}
+
+/* ──────────────── 5. Forms & Alerts ──────────────── */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="password"],
+.form-control {
+    background-color: var(--bg-input);
+    color: #ffffff;
+    border: 1px solid #444;
+    padding: 0.55em 0.75em;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    border-radius: 3px;
+    width: 100%;
+    max-width: 340px;
+    margin-top: 0.25rem;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+.form-control:focus {
+    outline: none;
+    border-color: var(--neon);
+}
+
+input[type="submit"] {
+    padding: 0.5em 1.1em;
+    font-family: var(--font-mono);
+    border-radius: 3px;
+}
+
+input:invalid {
+    border-color: var(--neon);
+    box-shadow: none;
+}
+
+.error-message {
+    display: block;
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.flashes {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+}
+
+.flashes li {
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    background: rgba(255, 68, 68, 0.08);
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ──────────────── 6. Terminal Footer & Typewriter ──────────────── */
+.terminal-footer {
+    width: 100%;
+    max-width: 850px;
+    margin: 2rem auto 0;
+    padding-top: 0.5rem;
+    border-top: none; /* Ubrali punktirnuyu liniyu (1) */
+    color: var(--neon);
+    font-family: var(--font-mono);
+}
+
+.bash-output {
+    margin: 0;
+    min-height: 8.5rem; /* Fiksirovannaya vysota, chtoby ekran ne prygal */
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    line-height: 1.25; /* Plotnyi terminalnyi interval mezhdu strokami (2) */
+    color: var(--neon);
+    text-align: left;
+}
+
+.bash-output .typewriter {
+    display: block; /* Kazhdaya stroka sama po sebe blok, tegi <br> bolshe ne nuzhny */
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 1.25em;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 0.8s step-start infinite;
+    color: var(--neon);
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* ──────────────── 7. Pirate Cave Dashboard Grid ──────────────── */
+.cave-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.service-card {
+    border: 1px solid var(--neon);
+    padding: 1rem;
+    background: rgba(0, 255, 0, 0.03);
+    color: var(--neon);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.service-card:hover {
+    background: var(--neon-tint);
+    color: var(--neon);
+    transform: translateY(-2px);
+}
+
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.status-badge {
+    font-size: 0.7rem;
+    padding: 1px 6px;
+    border: 1px solid currentColor;
+}
+
+.status-online { color: var(--neon); }
+.status-vpn { color: var(--warn); }
+
+.service-desc {
+    font-size: 0.82rem;
+    color: #99cc99;
+    margin: 0;
+}
+
+/* ──────────────── 8. Vim Notebook ──────────────── */
+.notebook-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.vim-wrapper {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    border: 1px solid var(--neon);
+    height: 68vh;
+    background: var(--bg-panel);
+    font-family: var(--font-mono);
+    text-align: left;
+}
+
+.vim-sidebar {
+    border-right: 1px solid var(--neon);
+    padding: 0.8rem;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    color: var(--neon);
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px dashed var(--neon-dim);
+    padding-bottom: 4px;
+}
+
+#file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.8rem 0 0 0;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 6px;
+    cursor: pointer;
+    border-bottom: 1px solid #0a1f0a;
+}
+
+.file-item:hover {
+    background: var(--neon-tint);
+}
+
+.file-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-del {
+    background: none;
+    border: none;
+    color: var(--danger);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    padding: 0 4px;
+}
+
+.btn-del:hover {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.vim-main {
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+}
+
+.vim-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.vim-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.vim-actions .vim-btn {
+    margin: 0;
+}
+
+#current-filename {
+    background: #000000;
+    color: var(--neon);
+    border: 1px solid var(--neon);
+    padding: 4px 8px;
+    font-family: var(--font-mono);
+    min-width: 200px;
+    margin: 0;
+}
+
+#vim-editor {
+    flex: 1;
+    background: #000000;
+    color: var(--neon);
+    border: 1px solid var(--neon-dim);
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    line-height: 1.4;
+    resize: none;
+    outline: none;
+}
+
+#vim-editor:focus {
+    border-color: var(--neon);
+}
+
+.vim-statusline {
+    display: flex;
+    justify-content: space-between;
+    background: var(--neon);
+    color: #000000;
+    padding: 3px 10px;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+/* ──────────────── 9. Responsive / Mobile ──────────────── */
+@media (max-width: 650px) {
+    body {
+        padding: 1rem;
+    }
+    .vim-wrapper {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    .vim-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--neon);
+        max-height: 180px;
+    }
+    #vim-editor {
+        min-height: 350px;
+    }
+}

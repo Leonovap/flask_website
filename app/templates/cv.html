@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cv.css') }}?v=1.0.2">
+
+<div class="cv-actions no-print">
+    <button type="button" onclick="window.print()" class="button button-solid">[ ↓ Save as PDF / Print ]</button>
+    <a href="{{ url_for('main.contact') }}" class="button">Contact</a>
+    <a href="https://github.com/Leonovap" target="_blank" rel="noopener noreferrer" class="button">GitHub</a>
+    <a href="{{ personal.linkedin }}" target="_blank" rel="noopener noreferrer" class="button">LinkedIn</a>
+    <a href="{{ url_for('main.index') }}" class="button">Back</a>
+</div>
+
+<section class="cv-container">
+
+  <!-- Header / Personal Info -->
+  <header class="cv-header">
+    <h1>{{ personal.name }}</h1>
+    <h2>{{ personal.title }}</h2>
+    <div class="cv-meta">
+      <span>{{ personal.location or 'Warsaw, Poland' }}</span> |
+      <span>{{ personal.email }}</span> |
+      <span>forgeworld.eu</span> |
+      <span>github.com/Leonovap</span>
+    </div>
+    {% if personal.summary %}
+    <p class="cv-summary">{{ personal.summary }}</p>
+    {% endif %}
+  </header>
+
+  <!-- Skills -->
+  <section class="cv-section">
+    <h3>Technical Skills</h3>
+    <div class="skills-grid">
+      {% for category, skill_list in skills_columns.items() %}
+      <div class="skill-box">
+        <h4>{{ category }}</h4>
+        <ul class="skills-list">
+          {% for skill in skill_list %}
+            <li>{{ skill }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Work Experience -->
+  <section class="cv-section">
+    <h3>Work Experience</h3>
+    {% for job in experiences %}
+    <div class="job-entry">
+      <div class="job-header">
+        <h4>{{ job.role }} <span class="company">@ {{ job.company }}</span></h4>
+        <time>{{ job.period }}</time>
+      </div>
+      <ul>
+        {% for detail in job.details %}
+        <li>{{ detail }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </section>
+
+  <!-- Projects -->
+  <section class="cv-section">
+    <h3>Key Projects &amp; Infrastructure</h3>
+    <div class="projects-grid">
+      {% for project in projects %}
+      <div class="project-entry">
+        <h4>{{ project.name }}</h4>
+        <p>{{ project.description }}</p>
+        <p class="project-stack"><strong>Stack:</strong> {{ project.stack | join(' • ') }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Education & Languages in 2 columns -->
+  <div class="cv-two-col">
+    <section class="cv-section">
+      <h3>Education</h3>
+      <ul class="education-list">
+        {% for ed in education %}
+        <li>
+          <strong>{{ ed.degree }}</strong>{% if ed.school %}<br>{{ ed.school }}{% endif %}
+          {% if ed.period %}<time>{{ ed.period }}</time>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="cv-section">
+      <h3>Languages</h3>
+      <ul class="lang-list">
+        {% for lang, level in languages.items() %}
+        <li><strong>{{ lang }}:</strong> {{ level }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+
+  <!-- Interests -->
+  <section class="cv-section">
+    <h3>Interests</h3>
+    <ul class="interests-list">
+      {% for interest in interests %}
+      <li>{{ interest }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+</section>
+
+<div class="no-print" style="margin-top: 2rem;">
+    <a href="{{ url_for('main.index') }}" class="button">Back to Portal</a>
+</div>
+{% endblock %}

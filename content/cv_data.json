@@ -1,0 +1,106 @@
+{
+  "personal": {
+    "name": "Aliaksandr Liavonau",
+    "title": "IT Support & Automation Specialist | Linux & Systems Administrator",
+    "location": "Warsaw, Poland",
+    "email": "liawonau.al.pa@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/aliaksandr-liavonau-a68780248/",
+    "github": "https://github.com/Leonovap",
+    "summary": "Pragmatic IT & Automation Specialist with 4+ years of combined experience in Systems Administration and Enterprise IT Support. Proven track record of bridging L1/L2 operations and engineering by building Python/PowerShell web utilities for a 170,000+ user Active Directory environment and developing conversational AI workflows in ServiceNow and Google Dialogflow CX."
+  },
+  "skills_columns": {
+    "Automation, Scripting & AI": [
+      "Python (Flask web applications, REST APIs, SQLAlchemy, PyOTP, internal tooling)",
+      "PowerShell (Active Directory automation, bulk reporting, security auditing)",
+      "ServiceNow (Virtual Agent, Flow Designer, NLU intent & entity configuration)",
+      "Google Conversational Agents / Dialogflow CX (chatbot flows, NLU training)",
+      "Bash & Shell scripting (system automation, backup pipelines, TUI tools)"
+    ],
+    "Linux & Infrastructure": [
+      "Linux System Administration (AlmaLinux, RHEL/CentOS, Debian, Ubuntu, Alpine)",
+      "Docker & Docker Compose (containerization, multi-service orchestration)",
+      "Storage & Virtualization (ZFS storage pools, KVM, Proxmox)",
+      "Networking & Security (Nginx reverse proxy, SSL/TLS, WireGuard, OpenVPN, Fail2ban, DNS)",
+      "Self-Hosted Ecosystem (Home Assistant, Nextcloud, Calibre-Web, Samba)"
+    ],
+    "Enterprise IT & Operations": [
+      "Active Directory & Quest Active Roles Server (IAM, GPO, 170k+ user scale)",
+      "Microsoft 365, Exchange, Azure AD / Entra ID administration",
+      "Enterprise Access & VDI (Cisco Duo MFA, Citrix Workspace, GlobalProtect VPN)",
+      "Git & CI/CD workflows (GitHub Actions, version control)"
+    ]
+  },
+  "experiences": [
+    {
+      "role": "IT Supporter & Service Desk Automation",
+      "company": "DSV ISS, Warsaw, Poland",
+      "period": "03.2025 – Present",
+      "details": [
+        "Engineered and deployed an internal web wrapper using Python (Flask) and PowerShell to query an Active Directory environment of 170,000+ users, automating password expiration reporting and rapid contact lookups.",
+        "Designed, trained, and maintained automated support workflows using ServiceNow Flow Designer, Virtual Agent, and Google Dialogflow CX to deflect repetitive L1 tickets.",
+        "Developed custom PowerShell scripts to automate routine Active Directory diagnostics, account unlocking, and group membership audits.",
+        "Provided global enterprise IT support across Windows, M365, Citrix, VPN, and MFA (Cisco Duo) under strict SLA targets."
+      ]
+    },
+    {
+      "role": "System Administrator",
+      "company": "Security Technologies / Softcorp LLC, Minsk",
+      "period": "2021 – 2023",
+      "details": [
+        "Administered Linux and Windows Server infrastructure for a 24/7 operation with 400+ employees[cite: 20].",
+        "Deployed in-house software releases to production servers and monitored system uptime and performance[cite: 20].",
+        "Managed corporate networking equipment, VPN tunnels, VoIP telephony, and physical access control systems[cite: 20].",
+        "Implemented endpoint security policies, automated backups, and resolved L2/L3 infrastructure incidents[cite: 20]."
+      ]
+    },
+    {
+      "role": "ERP & Website Administrator / B2B Specialist",
+      "company": "Stetskievich Group of Companies, Minsk",
+      "period": "2019 – 2021",
+      "details": [
+        "Managed maintenance, data integrity, and upgrades of the corporate ERP system[cite: 20].",
+        "Administered corporate web resources and automated catalog integrations[cite: 20].",
+        "Coordinated technical requirements between B2B clients and internal IT contractors[cite: 20]."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Active Directory Web Toolkit (Enterprise Wrapper)",
+      "description": "Internal web tool built for Service Desk operations to eliminate manual PowerShell execution. Processes AD data across 170k+ user objects to generate real-time password expiration reports and contact directories.",
+      "stack": ["Python", "Flask", "PowerShell", "Active Directory", "HTML/CSS"]
+    },
+    {
+      "name": "DataForge Self-Hosted Infrastructure & Portal (forgeworld.eu)",
+      "description": "24/7 home-lab server (32GB RAM, 8TB ZFS pool) running containerized workloads behind hardened Nginx reverse proxies. Features a custom Flask web portal with TOTP 2FA, rate limiting, live telemetry, and browser-based Vim note editor.",
+      "stack": ["Linux", "Docker", "ZFS", "Nginx", "WireGuard", "Python", "Flask", "SQLAlchemy", "PyOTP"]
+    },
+    {
+      "name": "Smart Home & IoT Automation Ecosystem",
+      "description": "Centralized home automation server running Home Assistant in Docker, integrating Zigbee/Wi-Fi sensors, IR blasters, media servers, and robotic vacuum automation via custom YAML rules and local APIs.",
+      "stack": ["Home Assistant", "Docker", "YAML", "Linux", "Networking"]
+    },
+    {
+      "name": "Corporate Network & KVM Cloud Simulation",
+      "description": "Multi-node virtualized corporate environment with DMZ, automated VM provisioning via KVM/Ansible, centralized DNS, Samba shares, and Fail2ban hardening[cite: 20].",
+      "stack": ["AlmaLinux", "Ubuntu Server", "Windows Server", "KVM", "Ansible", "OpenVPN", "DNS", "Fail2ban"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor's Degree in Law",
+      "school": "\"MITSO\" International University, Minsk",
+      "period": "2015 – 2020"
+    }
+  ],
+  "languages": {
+    "Polish": "Full Professional Proficiency",
+    "English": "Professional Working Proficiency",
+    "Russian": "Native / Bilingual"
+  },
+  "interests": [
+    "Self-hosting, Linux home-lab engineering & automating routine tasks",
+    "Vinyl records collecting & 70s funk/soul music",
+    "Indie game development (Godot) & deep-diving into tech rabbit holes"
+  ]
+}

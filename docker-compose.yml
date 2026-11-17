@@ -1,0 +1,17 @@
+
+services:
+  flaskcv:
+    image: leonovap/flaskcv:1.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flaskcv
+    env_file:
+    - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./blog_posts:/app/blog_posts:cached
+      - ./content:/app/content:cached
+      - ./instance:/app/instance:cached
+

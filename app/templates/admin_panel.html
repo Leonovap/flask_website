@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="notebook-header">
+    <h2>root@dataforge:~# userdel / rm -rf /blog/*</h2>
+    <a href="{{ url_for('auth.dashboard') }}" class="button">[ &lt; Back to Cave ]</a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<!-- 1. Управление постами блога -->
+<div style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem; margin-bottom: 2rem;">
+    <div class="sidebar-header">-- PUBLISHED BLOG POSTS ({{ posts|length }}) --</div>
+    {% if posts %}
+        {% for post in posts %}
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0a1f0a; padding: 0.5rem 0;">
+            <div>
+                <a href="{{ url_for('blog.blog_post', slug=post.slug) }}" style="border: none; padding: 0; margin: 0; font-weight: bold;">{{ post.title }}</a>
+                <span style="font-size: 0.8rem; color: #88cc88; margin-left: 0.5rem;">[{{ post.pub_date }} | by {{ post.author }}]</span>
+            </div>
+            <form method="POST" action="{{ url_for('auth.delete_post', post_id=post.id) }}" onsubmit="return confirm('Delete post {{ post.title }}?');" style="margin: 0;">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="vim-btn btn-danger" style="margin: 0;">[ rm -f ]</button>
+            </form>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="color: #88cc88; margin: 0;">No blog posts in database yet. Publish one from Vim Notebook!</p>
+    {% endif %}
+</div>
+
+<!-- 2. Управление пользователями -->
+<div style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem;">
+    <div class="sidebar-header">-- REGISTERED USERS ({{ users|length }}) --</div>
+    {% for u in users %}
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0a1f0a; padding: 0.5rem 0;">
+        <div>
+            <strong>{{ u.username }}</strong>
+            {% if u.id == current_user.id %}
+                <span class="status-badge status-online" style="margin-left: 0.5rem;">CURRENT SESSION</span>
+            {% endif %}
+        </div>
+        {% if u.id != current_user.id %}
+        <form method="POST" action="{{ url_for('auth.delete_user', user_id=u.id) }}" onsubmit="return confirm('Delete user {{ u.username }}?');" style="margin: 0;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="vim-btn btn-danger" style="margin: 0;">[ userdel ]</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+<!-- 3. Управление плитками дашборда -->
+<div style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem; margin-top: 2rem;">
+    <div class="sidebar-header">-- DASHBOARD TILES MANAGEMENT ({{ tiles|length }}) --</div>
+    
+    <!-- Форма добавления новой плитки -->
+    <form method="POST" action="{{ url_for('auth.add_tile') }}" style="display: grid; grid-template-columns: 2fr 3fr 1fr auto; gap: 0.5rem; margin-bottom: 1.2rem; align-items: center;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="text" name="title" placeholder="Service Name" required style="margin: 0;">
+        <input type="text" name="url" placeholder="https://... or http://10.8.0.3:..." required style="margin: 0;">
+        <input type="text" name="badge" placeholder="Badge (PUBLIC/VPN)" value="PUBLIC" style="margin: 0;">
+        <button type="submit" class="vim-btn button-solid" style="margin: 0;">[ + Add Tile ]</button>
+    </form>
+    <div style="font-size: 0.8rem; color: #88cc88; margin-bottom: 1rem;">
+        * Примеры: Calibre-Web, Nextcloud, Home Assistant, qBittorrent (`http://10.8.0.3:8282`), Code-Server (`http://10.8.0.3:8181`).
+    </div>
+
+    {% for tile in tiles %}
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0a1f0a; padding: 0.5rem 0;">
+        <div>
+            <strong>{{ tile.title }}</strong> — <code style="color: var(--neon);">{{ tile.url }}</code>
+            <span class="status-badge {{ tile.badge_type }}" style="margin-left: 0.5rem;">{{ tile.badge }}</span>
+        </div>
+        <form method="POST" action="{{ url_for('auth.delete_tile', tile_id=tile.id) }}" onsubmit="return confirm('Delete tile {{ tile.title }}?');" style="margin: 0;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="vim-btn btn-danger" style="margin: 0;">[ rm ]</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Pirate cave</h1>
+<p>Secure enterprise tunnel &amp; self-hosted services hub.</p>
+
+<div class="cave-grid">
+    <!-- Всегда доступный Vim-блокнот юзера -->
+    <a href="{{ url_for('auth.notebook') }}" class="service-card">
+        <div class="service-header">
+            <span>[Vim Notebook]</span>
+            <span class="status-badge status-online">ISOLATED</span>
+        </div>
+        <p class="service-desc">Personal notes, configs &amp; scratchpad</p>
+    </a>
+
+    <!-- Динамические плитки из Админки -->
+    {% for tile in tiles %}
+    <a href="{{ tile.url }}" class="service-card" {% if not tile.url.startswith('/') %}target="_blank" rel="noopener noreferrer"{% endif %}>
+        <div class="service-header">
+            <span>{{ tile.title }}</span>
+            <span class="status-badge {{ tile.badge_type }}">{{ tile.badge }}</span>
+        </div>
+        <p class="service-desc">{{ tile.description }}</p>
+    </a>
+    {% endfor %}
+
+    <!-- Кнопка админки видна только админу -->
+    {% if current_user.is_admin %}
+    <a href="{{ url_for('auth.admin_panel') }}" class="service-card" style="border-color: var(--warn);">
+        <div class="service-header">
+            <span style="color: var(--warn);">[System Admin]</span>
+            <span class="status-badge status-vpn">ROOT RBAC</span>
+        </div>
+        <p class="service-desc">Manage users, blog posts &amp; dashboard tiles</p>
+    </a>
+    {% endif %}
+</div>
+
+<div class="terminal-footer">
+    <a href="{{ url_for('auth.logout') }}" class="button button-solid">Logout</a>
+    <a href="{{ url_for('main.index') }}" class="button">Back</a>
+</div>
+{% endblock %}

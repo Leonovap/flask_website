@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="notebook-header">
+    <a href="{{ url_for('blog.blog_index') }}" class="button">[ &lt; Back to Blog Archive ]</a>
+    {% if current_user.is_authenticated %}
+        <form method="POST" action="{{ url_for('auth.delete_post', post_id=post.id) }}" onsubmit="return confirm('Delete this post?');" style="margin: 0;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="vim-btn btn-danger">[ rm -f Post ]</button>
+        </form>
+    {% endif %}
+</div>
+
+<article style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1.8rem; margin-top: 1rem;">
+    <header style="border-bottom: 1px dashed var(--neon-dim); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <h1 style="margin: 0 0 0.5rem 0; color: var(--neon);">{{ post.title }}</h1>
+        <div style="font-size: 0.85rem; color: #88cc88;">
+            Published: <strong>{{ post.pub_date }}</strong> | Author: <strong>{{ post.author }}</strong>
+        </div>
+    </header>
+
+    <!-- Сюда отрендерится безопасный Markdown -->
+    <div id="post-md-content" class="markdown-body" style="line-height: 1.7;"></div>
+    <textarea id="raw-md" style="display: none;">{{ post.content }}</textarea>
+</article>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const raw = document.getElementById("raw-md").value;
+    document.getElementById("post-md-content").innerHTML = DOMPurify.sanitize(marked.parse(raw));
+});
+</script>
+{% endblock %}

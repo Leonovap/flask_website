@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="notebook-header">
+    <h2>root@dataforge:~/notes# vim</h2>
+    <a href="{{ url_for('auth.dashboard') }}" class="button">[ &lt; Back to Cave ]</a>
+</div>
+
+<div class="vim-wrapper" 
+     id="vim-app" 
+     data-api-base="{{ url_for('auth.manage_note', filename='') }}" 
+     data-publish-url="{{ url_for('auth.publish_post') }}"
+     data-csrf="{{ csrf_token() }}">
+     
+    <!-- Боковая панель со списком файлов -->
+    <div class="vim-sidebar">
+        <div class="sidebar-header">-- NERDTree [FILES] --</div>
+        <button class="vim-btn btn-full" onclick="createNewFile()">[ + New File ]</button>
+        <ul id="file-list">
+            {% for f in files %}
+            <li class="file-item" id="item-{{ f }}">
+                <span onclick="loadFile('{{ f }}')" class="file-name">{{ f }}</span>
+                <button onclick="deleteFile('{{ f }}')" class="btn-del" title="Delete">[x]</button>
+            </li>
+            {% else %}
+            <li class="empty-msg">No files yet</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Область редактора -->
+    <div class="vim-main">
+        <div class="vim-topbar">
+            <input type="text" id="current-filename" placeholder="filename.md" value="{{ files[0] if files else 'scratchpad.md' }}">
+            <div class="vim-actions">
+                <button class="vim-btn" onclick="toggleMarkdownPreview()" id="btn-preview">[:md Preview]</button>
+                <button class="vim-btn" onclick="saveCurrentFile()">[:w Save Note]</button>
+                <button class="vim-btn button-solid" onclick="togglePublishBar()">[:pub Blog Post]</button>
+                <button class="vim-btn btn-danger" onclick="deleteCurrentFile()">[:rm]</button>
+            </div>
+        </div>
+
+        <!-- Выдвижная панель публикации в Блог -->
+        <div id="publish-bar" style="display: none; border: 1px dashed var(--neon); padding: 0.6rem; margin-bottom: 0.5rem; background: #0a140a;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 0.5rem; align-items: center;">
+                <input type="text" id="post-title" placeholder="Post Title (Заголовок поста)" style="max-width: 100%; margin: 0;">
+                <input type="text" id="post-author" value="{{ current_user.username }}" placeholder="Author" style="max-width: 100%; margin: 0;">
+                <input type="date" id="post-date" style="background: #000; color: var(--neon); border: 1px solid var(--neon); padding: 0.45em; font-family: var(--font-mono);">
+                <button class="vim-btn button-solid" onclick="publishToBlog()" style="margin: 0;">[ 🚀 Publish ]</button>
+            </div>
+        </div>
+
+        <!-- Текстовый редактор и окно Markdown-превью -->
+        <textarea id="vim-editor" spellcheck="false" placeholder="# Заголовок в Markdown..."></textarea>
+        <div id="vim-preview" class="markdown-body" style="display: none; flex: 1; overflow-y: auto; border: 1px solid var(--neon); padding: 1rem; background: #030303;"></div>
+
+        <div class="vim-statusline">
+            <span id="vim-mode">-- MARKDOWN / VIM --</span>
+            <span id="vim-msg">Ready. Ctrl+S to save note.</span>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script src="{{ url_for('static', filename='notebook.js') }}?v=1.1.0"></script>
+{% endblock %}
