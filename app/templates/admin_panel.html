@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="notebook-header">
-    <h2>root@dataforge:~# userdel / rm -rf /blog/*</h2>
+    <h2>root@dataforge:~# usermod -aG services / rm -rf /blog/*</h2>
     <a href="{{ url_for('auth.dashboard') }}" class="button">[ &lt; Back to Cave ]</a>
 </div>
 
@@ -10,13 +10,13 @@
     {% if messages %}
         <ul class="flashes">
         {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
+            <li class="{{ category }}" style="border-color: var(--neon); color: var(--neon);">{{ message }}</li>
         {% endfor %}
         </ul>
     {% endif %}
 {% endwith %}
 
-<!-- 1. Управление постами блога -->
+<!-- 1. Upravlenie postami bloga -->
 <div style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem; margin-bottom: 2rem;">
     <div class="sidebar-header">-- PUBLISHED BLOG POSTS ({{ posts|length }}) --</div>
     {% if posts %}
@@ -37,17 +37,50 @@
     {% endif %}
 </div>
 
-<!-- 2. Управление пользователями -->
+<!-- 2. Upravlenie polzovatelyami i galochkami dostupa k plitkam -->
 <div style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem;">
-    <div class="sidebar-header">-- REGISTERED USERS ({{ users|length }}) --</div>
+    <div class="sidebar-header">-- REGISTERED USERS &amp; DASHBOARD ACL ({{ users|length }}) --</div>
+    <p style="font-size: 0.82rem; color: #88cc88; margin-top: 0;">
+        * Default tiles for all users: <strong>Vim Notebook, Calibre-Web, Nextcloud, Minecraft Hub</strong>.<br>
+        * Check extra tiles below to unlock them for specific users:
+    </p>
+
     {% for u in users %}
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0a1f0a; padding: 0.5rem 0;">
-        <div>
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid #0a1f0a; padding: 0.75rem 0;">
+        <div style="min-width: 160px;">
             <strong>{{ u.username }}</strong>
+            {% if u.is_admin %}
+                <span class="status-badge status-vpn" style="margin-left: 0.4rem;">ADMIN (ALL TILES)</span>
+            {% endif %}
             {% if u.id == current_user.id %}
-                <span class="status-badge status-online" style="margin-left: 0.5rem;">CURRENT SESSION</span>
+                <span class="status-badge status-online" style="margin-left: 0.4rem;">YOU</span>
             {% endif %}
         </div>
+
+        {% if not u.is_admin %}
+        <!-- Forma s galochkami dostupa dlya obychnogo usera -->
+        <form method="POST" action="{{ url_for('auth.update_user_access', user_id=u.id) }}" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin: 0;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <label style="cursor: pointer; font-size: 0.9rem;">
+                <input type="checkbox" name="services" value="ha" {% if u.has_service('ha') %}checked{% endif %}>
+                Home Assistant
+            </label>
+            <label style="cursor: pointer; font-size: 0.9rem;">
+                <input type="checkbox" name="services" value="code" {% if u.has_service('code') %}checked{% endif %}>
+                Code-Server
+            </label>
+            <label style="cursor: pointer; font-size: 0.9rem;">
+                <input type="checkbox" name="services" value="qbit" {% if u.has_service('qbit') %}checked{% endif %}>
+                qBittorrent
+            </label>
+
+            <button type="submit" class="vim-btn button-solid" style="margin: 0; padding: 2px 10px;">[ Save ACL ]</button>
+        </form>
+        {% else %}
+        <div style="font-size: 0.85rem; color: #88cc88;">Full root access to all hardcoded tiles</div>
+        {% endif %}
+
         {% if u.id != current_user.id %}
         <form method="POST" action="{{ url_for('auth.delete_user', user_id=u.id) }}" onsubmit="return confirm('Delete user {{ u.username }}?');" style="margin: 0;">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -57,35 +90,4 @@
     </div>
     {% endfor %}
 </div>
-<!-- 3. Управление плитками дашборда -->
-<div style="border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem; margin-top: 2rem;">
-    <div class="sidebar-header">-- DASHBOARD TILES MANAGEMENT ({{ tiles|length }}) --</div>
-    
-    <!-- Форма добавления новой плитки -->
-    <form method="POST" action="{{ url_for('auth.add_tile') }}" style="display: grid; grid-template-columns: 2fr 3fr 1fr auto; gap: 0.5rem; margin-bottom: 1.2rem; align-items: center;">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <input type="text" name="title" placeholder="Service Name" required style="margin: 0;">
-        <input type="text" name="url" placeholder="https://... or http://10.8.0.3:..." required style="margin: 0;">
-        <input type="text" name="badge" placeholder="Badge (PUBLIC/VPN)" value="PUBLIC" style="margin: 0;">
-        <button type="submit" class="vim-btn button-solid" style="margin: 0;">[ + Add Tile ]</button>
-    </form>
-    <div style="font-size: 0.8rem; color: #88cc88; margin-bottom: 1rem;">
-        * Примеры: Calibre-Web, Nextcloud, Home Assistant, qBittorrent (`http://10.8.0.3:8282`), Code-Server (`http://10.8.0.3:8181`).
-    </div>
-
-    {% for tile in tiles %}
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #0a1f0a; padding: 0.5rem 0;">
-        <div>
-            <strong>{{ tile.title }}</strong> — <code style="color: var(--neon);">{{ tile.url }}</code>
-            <span class="status-badge {{ tile.badge_type }}" style="margin-left: 0.5rem;">{{ tile.badge }}</span>
-        </div>
-        <form method="POST" action="{{ url_for('auth.delete_tile', tile_id=tile.id) }}" onsubmit="return confirm('Delete tile {{ tile.title }}?');" style="margin: 0;">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button type="submit" class="vim-btn btn-danger" style="margin: 0;">[ rm ]</button>
-        </form>
-    </div>
-    {% endfor %}
-</div>
-
-
 {% endblock %}

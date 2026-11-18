@@ -2,10 +2,10 @@
 
 {% block content %}
 <h1>Pirate cave</h1>
-<p>Secure enterprise tunnel &amp; self-hosted services hub.</p>
+<p>Some services have a public web-domain; Torrent services and Code-Server work only over the VPN.</p>
 
 <div class="cave-grid">
-    <!-- Всегда доступный Vim-блокнот юзера -->
+    <!-- 1. DEFAULT: Vim Notebook -->
     <a href="{{ url_for('auth.notebook') }}" class="service-card">
         <div class="service-header">
             <span>[Vim Notebook]</span>
@@ -14,25 +14,74 @@
         <p class="service-desc">Personal notes, configs &amp; scratchpad</p>
     </a>
 
-    <!-- Динамические плитки из Админки -->
-    {% for tile in tiles %}
-    <a href="{{ tile.url }}" class="service-card" {% if not tile.url.startswith('/') %}target="_blank" rel="noopener noreferrer"{% endif %}>
+    <!-- 2. DEFAULT: Calibre-Web -->
+    <a href="https://calibre.forgeworld.eu" class="service-card" target="_blank" rel="noopener noreferrer">
         <div class="service-header">
-            <span>{{ tile.title }}</span>
-            <span class="status-badge {{ tile.badge_type }}">{{ tile.badge }}</span>
+            <span>Calibre-Web</span>
+            <span class="status-badge status-online">PUBLIC</span>
         </div>
-        <p class="service-desc">{{ tile.description }}</p>
+        <p class="service-desc">E-Book library &amp; PocketBook reader sync</p>
     </a>
-    {% endfor %}
 
-    <!-- Кнопка админки видна только админу -->
+    <!-- 3. DEFAULT: Nextcloud -->
+    <a href="https://mycloud.forgeworld.eu" class="service-card" target="_blank" rel="noopener noreferrer">
+        <div class="service-header">
+            <span>Nextcloud</span>
+            <span class="status-badge status-online">PUBLIC</span>
+        </div>
+        <p class="service-desc">Self-hosted cloud storage &amp; files</p>
+    </a>
+
+    <!-- 4. DEFAULT: Minecraft Hub -->
+    <a href="{{ url_for('auth.minecraft') }}" class="service-card">
+        <div class="service-header">
+            <span>[Minecraft Hub]</span>
+            <span class="status-badge status-online">MODDED</span>
+        </div>
+        <p class="service-desc">Server status, modpack download &amp; guide</p>
+    </a>
+
+    <!-- 5. RESTRICTED: Home Assistant (po galochke 'ha') -->
+    {% if current_user.has_service('ha') %}
+    <a href="https://shome.forgeworld.eu" class="service-card" target="_blank" rel="noopener noreferrer">
+        <div class="service-header">
+            <span>Home Assistant</span>
+            <span class="status-badge status-online">2FA / SSL</span>
+        </div>
+        <p class="service-desc">Smart home dashboard, sensors &amp; Roborock</p>
+    </a>
+    {% endif %}
+
+    <!-- 6. RESTRICTED: Code-Server (po galochke 'code') -->
+    {% if current_user.has_service('code') %}
+    <a href="http://10.8.0.3:8181" class="service-card" target="_blank" rel="noopener noreferrer">
+        <div class="service-header">
+            <span>Code-Server</span>
+            <span class="status-badge status-vpn">VPN: 10.8.0.3</span>
+        </div>
+        <p class="service-desc">VS Code IDE in browser (:8181)</p>
+    </a>
+    {% endif %}
+
+    <!-- 7. RESTRICTED: qBittorrent (po galochke 'qbit') -->
+    {% if current_user.has_service('qbit') %}
+    <a href="http://10.8.0.3:8282" class="service-card" target="_blank" rel="noopener noreferrer">
+        <div class="service-header">
+            <span>qBittorrent</span>
+            <span class="status-badge status-vpn">VPN: 10.8.0.3</span>
+        </div>
+        <p class="service-desc">Torrent client Web UI (:8282)</p>
+    </a>
+    {% endif %}
+
+    <!-- 8. ADMIN ONLY: System Admin -->
     {% if current_user.is_admin %}
     <a href="{{ url_for('auth.admin_panel') }}" class="service-card" style="border-color: var(--warn);">
         <div class="service-header">
             <span style="color: var(--warn);">[System Admin]</span>
             <span class="status-badge status-vpn">ROOT RBAC</span>
         </div>
-        <p class="service-desc">Manage users, blog posts &amp; dashboard tiles</p>
+        <p class="service-desc">Manage users, access checkboxes &amp; blog posts</p>
     </a>
     {% endif %}
 </div>

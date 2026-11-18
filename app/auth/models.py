@@ -16,7 +16,16 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(256), nullable=False)
     totp_secret = db.Column(db.String(32), nullable=False, default=pyotp.random_base32)
     last_used_otp = db.Column(db.String(6), nullable=True)
-    is_admin = db.Column(db.Boolean, default=False)  # Флаг администратора
+    is_admin = db.Column(db.Boolean, default=False)
+    # Spisok razreshennyh dop-plitok cherez zapyatuyu (naprimer: "ha,code,qbit")
+    allowed_services = db.Column(db.String(250), default="")
+
+    def has_service(self, service_key):
+        if self.is_admin:
+            return True
+        if not self.allowed_services:
+            return False
+        return service_key in self.allowed_services.split(',')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -36,15 +45,3 @@ class User(db.Model, UserMixin):
             db.session.commit()
             return True
         return False
-
-
-class ServiceTile(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    url = db.Column(db.String(300), nullable=False)
-    description = db.Column(db.String(300), nullable=True)
-    badge = db.Column(db.String(50), default="PUBLIC")
-    badge_type = db.Column(db.String(20), default="status-online")  # status-online, status-vpn
-    is_admin_only = db.Column(db.Boolean, default=False)           # Видно только админу
-    order = db.Column(db.Integer, default=0)
-    

@@ -3,7 +3,7 @@ import re, socket , pyotp, hmac , os
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify, current_app, send_from_directory, abort
 from flask_login import login_user, logout_user, login_required, current_user
 from app import db, limiter
-from app.auth.models import User, ServiceTile
+from app.auth.models import User
 from app.blog.models import Post
 from app.auth.forms import LoginForm, ResetOrRegisterForm
 from werkzeug.utils import secure_filename
@@ -93,16 +93,10 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
-
 @auth_bp.route('/dashboard')
 @login_required
 def dashboard():
-    # Админ видит все плитки, обычный юзер — только те, у которых is_admin_only = False
-    if current_user.is_admin:
-        tiles = ServiceTile.query.order_by(ServiceTile.order.asc()).all()
-    else:
-        tiles = ServiceTile.query.filter_by(is_admin_only=False).order_by(ServiceTile.order.asc()).all()
-    return render_template('dashboard.html', tiles=tiles)
+    return render_template('dashboard.html')
 
 
 @auth_bp.route('/dashboard/admin')
@@ -111,8 +105,7 @@ def dashboard():
 def admin_panel():
     posts = Post.query.order_by(Post.pub_date.desc(), Post.id.desc()).all()
     users = User.query.order_by(User.id.asc()).all()
-    tiles = ServiceTile.query.order_by(ServiceTile.order.asc()).all()
-    return render_template('admin_panel.html', posts=posts, users=users, tiles=tiles)
+    return render_template('admin_panel.html', posts=posts, users=users)
 
 
 @auth_bp.route('/dashboard/admin/add-tile', methods=['POST'])
@@ -137,15 +130,17 @@ def add_tile():
     return redirect(url_for('auth.admin_panel'))
 
 
-@auth_bp.route('/dashboard/admin/delete-tile/<int:tile_id>', methods=['POST'])
+@auth_bp.route('/dashboard/admin/update-access/<int:user_id>', methods=['POST'])
 @login_required
 @admin_required
-def delete_tile(tile_id):
-    tile = db.session.get(ServiceTile, tile_id)
-    if tile:
-        db.session.delete(tile)
+def update_user_access(user_id):
+    user = db.session.get(User, user_id)
+    if user and not user.is_admin:
+        # Sobiraem vse otmechennye galochki (ha, code, qbit)
+        selected = request.form.getlist('services')
+        user.allowed_services = ",".join(selected)
         db.session.commit()
-        flash('Service tile removed.', 'info')
+        flash(f'Access rights updated for user "{user.username}".', 'info')
     return redirect(url_for('auth.admin_panel'))
 
 
@@ -304,6 +299,7 @@ def admin_panell():
 
 @auth_bp.route('/dashboard/admin/delete-post/<int:post_id>', methods=['POST'])
 @login_required
+@admin_required
 def delete_post(post_id):
     post = db.session.get(Post, post_id)
     if post:
@@ -315,6 +311,7 @@ def delete_post(post_id):
 
 @auth_bp.route('/dashboard/admin/delete-user/<int:user_id>', methods=['POST'])
 @login_required
+@admin_required
 def delete_user(user_id):
     if user_id == current_user.id:
         flash('ERROR: Cannot delete your own active root session!', 'error')
