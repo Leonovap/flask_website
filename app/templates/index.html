@@ -20,7 +20,7 @@
     {% endif %}
 </div>
 
-<!-- Скрытая панель живой телеметрии сервера (открывается по кнопке [Server Stat]) -->
+
 <div id="stats-panel" style="display: none; border: 1px solid var(--neon); background: var(--bg-panel); padding: 1rem; margin-bottom: 1.5rem;">
     <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed var(--neon-dim); padding-bottom: 0.4rem; margin-bottom: 0.8rem;">
         <strong>root@dataforge:~# htop --summary</strong>
@@ -35,13 +35,16 @@
 </div>
 
 <footer class="terminal-footer">
-  <div class="bash-output">
-    <span class="typewriter" data-text="dataforge@guest~:$ whoami"></span>
-    <span class="typewriter" data-text="dataforge@guest~:$ {{ current_user.username if current_user.is_authenticated else 'Guest' }}"></span>
-    <span class="typewriter" data-text="dataforge@guest~:$ uptime"></span>
+  {% set active_user = current_user.username if current_user.is_authenticated else 'Guest' %}
+  <div class="bash-output" style="min-height: 15.5rem;">
+    <span class="typewriter" data-text="dataforge@{{ active_user }}~:$ whoami"></span>
+    <span class="typewriter" data-text="{{ active_user }}"></span>
+    <span class="typewriter" data-text="dataforge@{{ active_user }}~:$ uptime"></span>
     <span class="typewriter" data-text="21:41:00 up 5 days, 3 users, load average: 0.14, 0.08, 0.01"></span>
-    <span class="typewriter" data-text="dataforge@guest~:$ fortune | cowsay"></span>
-    <span class="typewriter" data-text="( ASCII cow begins philosophizing... )"></span>
+    <span class="typewriter" data-text="dataforge@{{ active_user }}~:$ fortune | cowsay"></span>
+    {% for line in cowsay_lines %}
+    <span class="typewriter" data-text="{{ line }}"></span>
+    {% endfor %}
   </div>
 </footer>
 

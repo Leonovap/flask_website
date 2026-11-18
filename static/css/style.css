@@ -206,9 +206,9 @@ input:invalid {
 }
 
 .bash-output .typewriter {
-    display: block; /* Kazhdaya stroka sama po sebe blok, tegi <br> bolshe ne nuzhny */
-    white-space: pre-wrap;
-    word-break: break-word;
+    display: block;
+    white-space: pre;
+    overflow-x: auto;
     min-height: 1.25em;
 }
 

@@ -1,8 +1,6 @@
 # app/main/routes.py
-import json, os
 from flask import Blueprint, render_template, jsonify
-import time
-import shutil
+import shutil, random, time, json, os, psutil
 
 START_TIME = time.time()
 
@@ -12,7 +10,38 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', cowsay_lines=generate_cowsay())
+
+# Slovar/spisok citat dlya fortune | cowsay
+FORTUNE_QUOTES = [
+    ("Do not go gentle into that good night.", "Rage, rage against the dying of the light."),
+    ("There is no cloud.", "It is just someone else's Linux server."),
+    ("Talk is cheap.", "Show me the code. — Linus Torvalds"),
+    ("Automate the routine,", "or the routine will automate you."),
+    ("In a world without walls and fences,", "who needs Windows and Gates?"),
+    ("chmod 777 is not a fix.", "It is a surrender."),
+    ("He who controls the spice", "controls the universe. — Frank Herbert"),
+    ("Nothing behind me, everything ahead of me,", "as is ever so on the road. — Jack Kerouac"),
+    ("Real programmers count from 0", "and back up to ZFS pools.")
+]
+
+def generate_cowsay():
+    line1, line2 = random.choice(FORTUNE_QUOTES)
+    width = max(len(line1), len(line2))
+    top_border = " " + "_" * (width + 2)
+    bottom_border = " " + "-" * (width + 2)
+    
+    return [
+        top_border,
+        f"/ {line1.ljust(width)} \\",
+        f"\\ {line2.ljust(width)} /",
+        bottom_border,
+        "        \\   ^__^",
+        "         \\  (oo)\\_______",
+        "            (__)\\       )\\/\\",
+        "                ||----w |",
+        "                ||     ||"
+    ]
 
 @main_bp.route('/cv')
 def cv():
@@ -49,7 +78,6 @@ def server_stats():
 
     # Если установлен psutil — покажет точный RAM и CPU, если нет — выдаст фоллбэк без падения
     try:
-        import psutil
         cpu_str = f"{psutil.cpu_percent(interval=0.1)}%"
         ram = psutil.virtual_memory()
         ram_str = f"{round(ram.used / (1024**3), 1)} / {round(ram.total / (1024**3), 1)} GB"
@@ -64,3 +92,4 @@ def server_stats():
         "disk": disk_str,
         "status": "HEALTHY [ONLINE]"
     })
+
